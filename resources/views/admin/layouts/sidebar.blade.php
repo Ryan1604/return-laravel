@@ -1,13 +1,13 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="{{ route('public.index') }}" class="logo">
-                <img src="{{ asset('img/npic-logo.svg') }}" alt="navbar brand">
+            <a href="#" class="logo">
+                PT Dharma Electrindo
             </a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="{{ route('public.index') }}" class="logo">
-                <img src="{{ asset('img/npic-pic.svg') }}" alt="navbar brand">
+            <a href="#" class="logo">
+                <img src="{{ asset('img/logo.jpeg') }}" width="50" alt="navbar brand">
             </a>
         </div>
         <ul class="sidebar-menu">
@@ -17,79 +17,52 @@
                     <span>Dashboard</span>
                 </a>
             </li>
-            <li class="menu-header">MANAGE</li>
-            <li class="dropdown {{ request()->segment(2) == 'items' ? 'active' : '' }}">
-                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-book"></i> <span>Items</span>
-                </a>
-
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->segment(3) == 'books' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.items.books.index') }}">Books</a></li>
-                    <li class="{{ request()->segment(3) == 'ebooks' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.items.ebooks.index') }}">E-Books</a></li>
-                    <li class="{{ request()->segment(3) == 'lostBooks' ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.items.lostBooks.index') }}">Lost Books</a></li>
-                </ul>
-            </li>
-            <li class="{{ request()->segment(2) == 'categories' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.categories.index') }}">
-                    <i class="fas fa-hashtag"></i>
-                    <span>Categories</span>
+            <li class="menu-header">Data Master</li>
+            @if(auth()->user()->isAdmin())
+            <li class="{{ request()->segment(2) == 'company' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.company.index') }}">
+                    <i class="fas fa-industry"></i>
+                    <span>Data Perusahaan</span>
                 </a>
             </li>
-            <li class="{{ request()->segment(2) == 'authors' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.authors.index') }}">
+            <li class="{{ request()->segment(2) == 'products' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.products.index') }}">
                     <i class="fas fa-marker"></i>
-                    <span>Authors</span>
-                </a>
-            </li>
-            <li class="{{ request()->segment(2) == 'publishers' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.publishers.index') }}">
-                    <i class="fas fa-newspaper"></i>
-                    <span>Publishers</span>
-                </a>
-            </li>
-            <li class="{{ request()->segment(2) == 'racks' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.racks.index') }}">
-                    <i class="fas fa-columns"></i>
-                    <span>Racks</span>
-                </a>
-            </li>
-            <li class="{{ request()->segment(2) == 'roles' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.roles.index') }}">
-                    <i class="fas fa-address-book"></i>
-                    <span>Roles</span>
+                    <span>Data Claim Customer</span>
                 </a>
             </li>
             <li class="{{ request()->segment(2) == 'users' ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.users.index') }}">
-                    <i class="fas fa-user"></i>
-                    <span>Users</span>
+                    <i class="fas fa-users"></i>
+                    <span>Data Pengguna</span>
                 </a>
             </li>
-            <li class="{{ request()->segment(2) == 'feedback' ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.feedback') }}">
-                    <i class="fas fa-comments"></i>
-                    <span>Feedback</span>
+            @endif
+            @if(auth()->user()->isManager())
+            <li class="{{ request()->segment(2) == 'company' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.company.index') }}">
+                    <i class="fas fa-industry"></i>
+                    <span>Data Perusahaan</span>
                 </a>
             </li>
-            <li class="dropdown {{ request()->segment(2) == 'issues' ? 'active' : '' }}">
-                <a href="javascript:void(0)" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <i class="fas fa-exchange-alt"></i> <span>Issues</span>
+            <li class="{{ request()->segment(2) == 'products' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.products.index') }}">
+                    <i class="fas fa-marker"></i>
+                    <span>Data Claim Customer</span>
                 </a>
-
-                <ul class="dropdown-menu">
-                    <li class="{{ request()->segment(3) == 'borrows' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.issues.borrows.index') }}">Borrows</a>
-                    </li>
-                    <li class="{{ request()->path() == 'admin/issues/returns' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.issues.returns.index') }}">Returns</a>
-                    </li>
-                    <li class="{{ request()->path() == 'admin/issues/penaltySetting' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.issues.penaltySetting') }}">Penalty Setting</a>
-                    </li>
-                    <li class="{{ request()->path() == 'admin/issues/borrowSetting' ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.issues.borrowSetting') }}">Borrow Setting</a>
-                    </li>
-                </ul>
+            </li>
+            <li class="{{ request()->segment(2) == 'users' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.users.index') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Data Pengguna</span>
+                </a>
+            </li>
+            @endif
+            <li class="{{ request()->segment(2) == 'report' ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.report.index') }}">
+                    <i class="fas fa-newspaper"></i>
+                    <span>Laporan</span>
+                </a>
             </li>
         </ul>
     </aside>

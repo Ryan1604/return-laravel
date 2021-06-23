@@ -71,16 +71,6 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Serial Number</h6>
-                            <p id="sn"></p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Username</h6>
-                            <p id="username"></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-6">
                             <h6 class="font-weight-bold">Name</h6>
                             <p id="name"></p>
                         </div>
@@ -90,30 +80,6 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Date of Birth</h6>
-                            <p id="dob"></p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Phone Number</h6>
-                            <p id="phone"></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Gender</h6>
-                            <p id="gender"></p>
-                        </div>
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Address</h6>
-                            <p id="address"></p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6 col-6">
-                            <h6 class="font-weight-bold">Faculty</h6>
-                            <p id="faculty"></p>
-                        </div>
                         <div class="col-md-6 col-sm-6 col-6">
                             <h6 class="font-weight-bold">Status</h6>
                             <p class="badge badge-pill" id="status"></p>
@@ -156,12 +122,8 @@
 
             <div class="section-body">
                 <div class="card card-primary">
-                    @if(auth()->user()->isLibrarian())
+                    @if(auth()->user()->isAdmin())
                         <div class="card-header">
-                            <button class="btn btn-danger" id="btn-delete-all">
-                                <i class="fas fa-trash-alt"></i>
-                                Delete All Selected
-                            </button>
                             <a class="btn btn-primary ml-auto" href="{{ route('admin.users.create') }}">
                                 <i class="fas fa-plus-circle"></i>
                                 Add User
@@ -173,15 +135,7 @@
                             <table class="table table-sm table-hover" id="user-table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th>
-                                            @if(auth()->user()->isLibrarian())
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" class="custom-control-input" id="checkbox-all">
-                                                    <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
-                                                </div>
-                                            @endif
-                                        </th>
-                                        <th>#</th>
+                                        <th>No</th>
                                         <th>Name</th>
                                         <th>Role</th>
                                         <th>Status</th>
@@ -266,12 +220,6 @@
                 ajax: '{{ route('admin.users.index') }}',
                 columns: [
                     {
-                        data: 'check',
-                        name: 'check',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
                         data: 'DT_RowIndex',
                         name: 'DT_RowIndex',
                         orderable: false,
@@ -299,42 +247,6 @@
                         orderable: false,
                         searchable: false
                     }
-                ],
-                dom: 'lBfrtip',
-                buttons: [
-                    {
-                        extend: 'print',
-                        title: 'LMS - Users (' + date + ')',
-                        filename: 'LMS - Users (' + date + ')',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        }
-                    },
-                    {
-                        extend: 'csv',
-                        title: 'LMS - Users (' + date + ')',
-                        filename: 'LMS - Users (' + date + ')',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        }
-                    },
-                    {
-                        extend: 'excel',
-                        title: 'LMS - Users (' + date + ')',
-                        filename: 'LMS - Users (' + date + ')',
-                        autoFilter: true,
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        }
-                    },
-                    {
-                        extend: 'pdf',
-                        title: 'LMS - Users (' + date + ')',
-                        filename: 'LMS - Users (' + date + ')',
-                        exportOptions: {
-                            columns: [1, 2, 3, 4]
-                        }
-                    },
                 ],
                 order: []
             });
@@ -496,74 +408,6 @@
                 });
             });
 
-            // Delete all selected user
-            $('#btn-delete-all').click(function() {
-                var ids = [];
-                $('.sub-checkbox:checked').each(function() {
-                    ids.push($(this).val());
-                });
-
-                if(ids.length <= 0) {
-                    swal({
-                        title: "Whoops!",
-                        text: "Calm down, select at least one row first",
-                        icon: "warning",
-                        timer: 3000
-                    });
-                } else {
-                    swal("Whoops!", "Are you sure want to delete these selected rows?", "warning", {
-                        buttons: {
-                            cancel: "No, just keep it exists!",
-                            ok: {
-                                text: "Yes, delete it!",
-                                value: "ok"
-                            }
-                        },
-                    }).then((value) => {
-                        switch (value) {
-                            case "ok" :
-                                $.ajax({
-                                    type: "POST",
-                                    url: '{{ route('admin.users.deleteAllSelected') }}',
-                                    data: {
-                                        ids: ids,
-                                    },
-                                    success: function(data) {
-                                        $('#user-table').DataTable().draw(false);
-                                        $('#user-table').DataTable().on('draw', function() {
-                                            $('[data-toggle="tooltip"]').tooltip();
-                                        });
-
-                                        swal({
-                                            title: "Well Done!",
-                                            text: "Selected users were successfully deleted",
-                                            icon: "success",
-                                            timer: 3000
-                                        });
-                                    },
-                                    error: function(data) {
-                                        swal({
-                                            title: "Hooray!",
-                                            text: "Something goes wrong",
-                                            icon: "error",
-                                            timer: 3000
-                                        });
-                                    }
-                                });
-                            break;
-
-                            default :
-                                swal({
-                                    title: "Oh Yeah!",
-                                    text: "It's safe, don't worry",
-                                    icon: "info",
-                                    timer: 3000
-                                });
-                            break;
-                        }
-                    });
-                }
-            });
         });
     </script>
 @endsection

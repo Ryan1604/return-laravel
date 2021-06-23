@@ -1,0 +1,1 @@
+<img src="http://127.0.0.1:8000/img/products/{{ $photo }}"  width="100" class="img-rounded" align="center" />

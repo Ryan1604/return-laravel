@@ -15,14 +15,6 @@
                 <div class="d-sm-none d-lg-inline-block">Hi, {{ auth()->user()->name }}</div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
-                <div class="dropdown-title">Logged in {{ auth()->user()->updated_at->diffForHumans() }}
-                </div>
-                <a href="{{ route('admin.profile') }}" class="dropdown-item has-icon">
-                    <i class="fas fa-user"></i> Profile
-                </a>
-                <a href="{{ route('admin.changePassword') }}" class="dropdown-item has-icon">
-                    <i class="fas fa-lock"></i> Change Password
-                </a>
                 <div class="dropdown-divider"></div>
                 <a href="{{ route('logout') }}"
                     onclick="event.preventDefault();document.getElementById('logout-form').submit();"

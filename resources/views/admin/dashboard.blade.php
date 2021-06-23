@@ -2,239 +2,53 @@
 @section('title', 'Dashboard')
 
 @section('content')
-    <!-- Main Content -->
-    <div class="main-content">
-        <section class="section">
-            <div class="section-header">
-                <h1>Dashboard</h1>
+   <!-- Main Content -->
+   <div class="main-content">
+    <section class="section">
+      <div class="section-header">
+        <h1>Dashboard</h1>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-12 col-sm-12">
+          <div class="card">
+            <div class="card-header">
+              <h4>Dashboard</h4>
             </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Books</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['books'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-danger">
-                            <i class="far fa-file-pdf"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>E-Books</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['ebooks'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Members</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['members'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-address-book"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Roles</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['roles'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-info">
-                            <i class="fas fa-hashtag"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Categories</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['categories'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-secondary">
-                            <i class="fas fa-marker"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Authors</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['authors'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-success">
-                            <i class="fas fa-newspaper"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Publishers</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['publishers'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="fas fa-columns"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Racks</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ $counts['racks'] }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-6 col-md-6 col-12">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4>Today Issues</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="summary">
-                                <div class="summary-info">
-                                    <h4>Issues</h4>
-                                    @php
-                                    $members = [];
+            <div class="card-body">
+                <img alt="image" src="{{ asset('img/Dashboard.jpeg') }}" width="1100" >
+                <h1 class="text-center mt-5">PT. DHARMA ELECTRINDO MANUFACTURING</h1>
+                <p>
+                    PT. Dharma Electrindo Manufacturing ( PT. DEM ) yang berdiri pada bulan Agustus 2002 memfokuskan bisnisnya dibidang Wiring Harness dan komponen electric lainnya untuk memasok kebutuhan produsen otomotif terkemuka dan senantiasa mengembangkan bisnisnya sesuai prinsip Manajemen Mutu ISO TS 16949 dan Manajemen Lingkungan ISO 14001.
+                </p>
 
-                                    foreach ($issues as $issue) {
-                                    array_push($members, $issue->issue->user_id);
-                                    }
-
-                                    $members = array_unique($members);
-                                    @endphp
-                                    <div class="text-muted">
-                                        @if($issues->isNotEmpty())
-                                        Issued {{ $issues->count() }} items on {{ count($members) }} members
-                                        @else
-                                        No issue yet for today
-                                        @endif
-                                    </div>
-                                    <div class="d-block mt-2">
-                                        <a href="{{ route('admin.issues.borrows.index') }}">View All</a>
-                                    </div>
-                                </div>
-                                @if($issues->isNotEmpty())
-                                <div class="summary-item">
-                                    <h6>Issue List <span class="text-muted">({{ $issues->count() }}
-                                            Items)</span></h6>
-                                    <ul class="list-unstyled list-unstyled-border">
-                                        @foreach($issues as $issue)
-                                        <li class="media">
-                                            <img class="mr-3 rounded" width="50"
-                                                src="{{ asset('img/books/' . $issue->book->book_cover_url) }}"
-                                                alt="product">
-                                            <div class="media-body">
-                                                <div class="media-right">{{ $issue->status }}</div>
-                                                <div class="media-title">{{ $issue->book->title }}</div>
-                                                <div class="text-muted text-small">by
-                                                    {{ $issue->issue->user->name }}
-                                                    <div class="bullet"></div>
-                                                    {{ $issue->updated_at->diffForHumans() }}
-                                                </div>
-                                            </div>
-                                        </li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-6">
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h4>Overall Issues</h4>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="issue-chart"></canvas>
-                        </div>
-                    </div>
-                </div>
+                <p>
+                    Untuk memberikan pelayanan terbaiknya, PT. Dharma Electrindo Manufacturing melengkapi fasilitas produksi dengan teknologi terkini, antara lain : mesin Auto-Cutting & Crimping, Auto-Cutting & Middle Stripping, Conveyor Assembling, dan Electrical Tester. Sebagai komitmen perusahaan untuk senantiasa menjaga kualitas Sumber Daya Manusia, perusahaan memiliki DOJO dengan program yang intensive dan terprogram dengan prasarana yang lengkap.
+                </p>
+                    
+                <p> 
+                    facilities terkait standar kualitas, juga tersedia seperti : Pull Tester, Air Leak Tester, Harness Flec Resistance Test & Harness Torsibility, Digital Microscope, Edges & Burrs Tester, Heating Tester, dan Fuse Tester.
+                </p>
+                <p>Produk-produk PT. Dharma Electrindo Manufacturing antara lain meliputi :</p>
+                <ul>
+                    <li>Sepeda Motor : Main Wiring Harness, Wiring Harness Speedometer, Speed Sensor Cable, dan Battery Harness</li>
+                    <li>Mobil : Main Harness, Instrument Panel Harness, Door Harness, Battery Harness</li>
+                    <li>Accessories & Others : Parking Sensor, Security Alarm</li>
+                </ul>
+                <p>Customer kami antara lain adalah :</p>
+                <ul>
+                    <li>PT. Astra Honda Motor</li>
+                    <li>PT. Indonesia Nippon Seiki (NS)</li>
+                    <li>PT. Hyundai Motor Indonesia</li>
+                    <li>PT. Toyota Astra Motor</li>
+                    <li>PT. Toyo Denso Indonesia</li>
+                    <li>PT. Astra International – Daihatsu Sales Operation</li>
+                </ul>
             </div>
-        </section>
-    </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
 @endsection
 
-@section('js')
-    <script src="{{ asset('backend/modules/chart.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            var ctx = document.getElementById("issue-chart").getContext('2d');
-            var dynamicColors = function() {
-                var r = Math.floor(Math.random() * 255);
-                var g = Math.floor(Math.random() * 255);
-                var b = Math.floor(Math.random() * 255);
-
-                return "rgb(" + r + "," + g + "," + b + ")";
-            };
-
-            var config = {
-                type: 'doughnut',
-                data: {
-                    datasets: [{
-                        data: ["{{ $counts['borrowed'] }}", "{{ $counts['returned'] }}", "{{ $counts['lost'] }}"],
-                        backgroundColor: [dynamicColors(), dynamicColors(), dynamicColors()]
-                    }],
-                    labels: ["Borrow", "Return", "Lost"],
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'bottom',
-                    },
-                }
-            };
-
-            new Chart(ctx, config);
-        });
-    </script>
-@endsection
 

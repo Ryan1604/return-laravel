@@ -4,6 +4,6 @@
             Nauval Azhar</a>
     </div>
     <div class="footer-right">
-        NPIC Library, created by Indonesian Student
+        SI Return Barang, created by Budi
     </div>
 </footer>

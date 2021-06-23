@@ -15,10 +15,14 @@ class CheckAdmin
      */
     public function handle($request, Closure $next)
     {
-        if($request->user()->isAdmin()) {
+        if ($request->user()->isAdmin()) {
             return $next($request);
-        } else {
-            abort(401);
+        }
+        if ($request->user()->isManager()) {
+            return $next($request);
+        }
+        if ($request->user()->isUser()) {
+            return $next($request);
         }
     }
 }

@@ -16,18 +16,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'sn',
         'name',
         'email',
-        'username',
-        'phone_number',
-        'dob',
-        'address',
         'password',
         'profile_url',
         'role_id',
-        'faculty_id',
-        'gender',
         'disabled'
     ];
 
@@ -37,7 +30,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password',
     ];
 
     /**
@@ -50,27 +43,33 @@ class User extends Authenticatable
         'password_changed_at' => 'datetime',
     ];
 
-    public function role() {
+    public function role()
+    {
         return $this->belongsTo('App\Models\Role');
     }
 
-    public function faculty() {
-        return $this->belongsTo('App\Models\Faculty');
+    public function isAdmin()
+    {
+        return $this->role()->whereIn('id', [1])->exists();
     }
 
-    public function isAdmin() {
-        return $this->role()->whereIn('id', [1, 2])->exists();
+    public function isManager()
+    {
+        return $this->role()->whereIn('id', [2])->exists();
     }
 
-    public function isLibrarian() {
-        return $this->role_id === 1;
+    public function isUser()
+    {
+        return $this->role()->whereIn('id', [3])->exists();
     }
 
-    public function isActiveSession() {
+    public function isActiveSession()
+    {
         return $this->session_id != session()->getId();
     }
 
-    public function isActive() {
+    public function isActive()
+    {
         return $this->disabled === '1';
     }
 }

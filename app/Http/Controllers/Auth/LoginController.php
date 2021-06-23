@@ -27,10 +27,9 @@ class LoginController extends Controller
      * @var string
      */
     protected $redirectTo = '/';
-    protected function redirectTo() {
-        if(auth()->user()->isAdmin()) {
-            return route('admin.dashboard');
-        }
+    protected function redirectTo()
+    {
+        return route('admin.dashboard');
     }
 
     protected $username;
@@ -70,7 +69,7 @@ class LoginController extends Controller
 
     protected function attemptLogin()
     {
-        if(auth()->guard()->attempt([$this->findUsername() => request()->input('login'), 'password' => request()->password, 'disabled' => '0'])) {
+        if (auth()->guard()->attempt([$this->findUsername() => request()->input('login'), 'password' => request()->password, 'disabled' => '0'])) {
             return $this->guard()->attempt($this->credentials(request()));
         }
     }

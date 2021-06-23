@@ -4,13 +4,13 @@
     'name' => 'Laravel',
     'env' => 'local',
     'debug' => true,
-    'url' => 'http://localhost:8000',
+    'url' => 'http://localhost',
     'asset_url' => NULL,
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
-    'key' => 'base64:WfgPq0Mg/p45lfOUEQNX6BX0GBSCaRjxADb4ptsWo34=',
+    'key' => 'base64:VS6G4+oSwAID3U4/lv/fs0dauUDOr6UL7LGuWpvRhMs=',
     'cipher' => 'AES-256-CBC',
     'providers' => 
     array (
@@ -43,6 +43,7 @@
       26 => 'App\\Providers\\RouteServiceProvider',
       27 => 'Yajra\\DataTables\\DataTablesServiceProvider',
       28 => 'Intervention\\Image\\ImageServiceProvider',
+      29 => 'Barryvdh\\DomPDF\\ServiceProvider',
     ),
     'aliases' => 
     array (
@@ -83,6 +84,7 @@
       'View' => 'Illuminate\\Support\\Facades\\View',
       'DataTables' => 'Yajra\\DataTables\\Facades\\DataTables',
       'Image' => 'Intervention\\Image\\Facades\\Image',
+      'PDF' => 'Barryvdh\\DomPDF\\Facade',
     ),
   ),
   'auth' => 
@@ -180,7 +182,7 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\framework/cache/data',
+        'path' => '/Users/ryanaprianto/Downloads/Return/storage/framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -230,7 +232,7 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'db_lms',
+        'database' => 'library',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
@@ -250,7 +252,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_lms',
+        'database' => 'library',
         'username' => 'root',
         'password' => '',
         'unix_socket' => '',
@@ -269,7 +271,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_lms',
+        'database' => 'library',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -284,7 +286,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'db_lms',
+        'database' => 'library',
         'username' => 'root',
         'password' => '',
         'charset' => 'utf8',
@@ -378,13 +380,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\app',
+        'root' => '/Users/ryanaprianto/Downloads/Return/storage/app',
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\app/public',
-        'url' => 'http://localhost:8000/storage',
+        'root' => '/Users/ryanaprianto/Downloads/Return/storage/app/public',
+        'url' => 'http://localhost/storage',
         'visibility' => 'public',
       ),
       's3' => 
@@ -429,13 +431,13 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\logs/laravel.log',
+        'path' => '/Users/ryanaprianto/Downloads/Return/storage/logs/laravel.log',
         'level' => 'debug',
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\logs/laravel.log',
+        'path' => '/Users/ryanaprianto/Downloads/Return/storage/logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
       ),
@@ -488,23 +490,23 @@
   'mail' => 
   array (
     'driver' => 'smtp',
-    'host' => 'smtp.gmail.com',
-    'port' => '587',
+    'host' => 'smtp.mailtrap.io',
+    'port' => '2525',
     'from' => 
     array (
       'address' => 'noreply@library.npic.edu.kh',
       'name' => 'NPIC Library',
     ),
-    'encryption' => 'tls',
-    'username' => 'gtmustang052@gmail.com',
-    'password' => 'r0g3rth4t',
+    'encryption' => NULL,
+    'username' => NULL,
+    'password' => NULL,
     'sendmail' => '/usr/sbin/sendmail -bs',
     'markdown' => 
     array (
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\xampp\\htdocs\\lms_npic_final\\resources\\views/vendor/mail',
+        0 => '/Users/ryanaprianto/Downloads/Return/resources/views/vendor/mail',
       ),
     ),
     'log_channel' => NULL,
@@ -589,10 +591,10 @@
   'session' => 
   array (
     'driver' => 'cookie',
-    'lifetime' => '180',
+    'lifetime' => '120',
     'expire_on_close' => true,
     'encrypt' => false,
-    'files' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\framework/sessions',
+    'files' => '/Users/ryanaprianto/Downloads/Return/storage/framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -612,9 +614,32 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\xampp\\htdocs\\lms_npic_final\\resources\\views',
+      0 => '/Users/ryanaprianto/Downloads/Return/resources/views',
     ),
-    'compiled' => 'C:\\xampp\\htdocs\\lms_npic_final\\storage\\framework\\views',
+    'compiled' => '/Users/ryanaprianto/Downloads/Return/storage/framework/views',
+  ),
+  'dompdf' => 
+  array (
+    'show_warnings' => false,
+    'orientation' => 'portrait',
+    'defines' => 
+    array (
+      'font_dir' => '/Users/ryanaprianto/Downloads/Return/storage/fonts/',
+      'font_cache' => '/Users/ryanaprianto/Downloads/Return/storage/fonts/',
+      'temp_dir' => '/var/folders/98/v4ckp4_d62xg1z6g9x09y3w80000gn/T',
+      'chroot' => '/Users/ryanaprianto/Downloads/Return',
+      'enable_font_subsetting' => false,
+      'pdf_backend' => 'CPDF',
+      'default_media_type' => 'screen',
+      'default_paper_size' => 'a4',
+      'default_font' => 'serif',
+      'dpi' => 96,
+      'enable_php' => false,
+      'enable_javascript' => true,
+      'enable_remote' => true,
+      'font_height_ratio' => 1.1,
+      'enable_html5_parser' => false,
+    ),
   ),
   'flare' => 
   array (
@@ -639,6 +664,7 @@
     'register_commands' => false,
     'ignored_solution_providers' => 
     array (
+      0 => 'Facade\\Ignition\\SolutionProviders\\MissingPackageSolutionProvider',
     ),
     'enable_runnable_solutions' => NULL,
     'remote_sites_path' => '',
@@ -661,6 +687,9 @@
   'tinker' => 
   array (
     'commands' => 
+    array (
+    ),
+    'alias' => 
     array (
     ),
     'dont_alias' => 

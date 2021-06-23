@@ -2,21 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Author;
-use App\Models\Category;
-use App\Models\IssueItem;
-use App\Models\Item;
-use App\Models\Publisher;
-use App\Models\Rack;
-use App\Models\Role;
 use App\User;
-use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (auth()->user()->isAdmin()) {
+                return $next($request);
+            } else if (auth()->user()->isManager()) {
+                return $next($request);
+            } else if (auth()->user()->isUser()) {
+                return $next($request);
+            } else {
+                abort(401);
+            }
+        })->except(['index']);
+    }
+
     protected $customMessages = [
         'required' => 'Please input the :attribute.',
         'unique' => 'This :attribute has already been taken.',
@@ -31,32 +38,20 @@ class AdminController extends Controller
         'role_id.required' => 'Please select Role.',
     ];
 
-    public function dashboard() {
-        $counts['books'] = Item::where('type', 'book')->where('disabled', '0')->count();
-        $counts['ebooks'] = Item::where('type', 'e-book')->where('disabled', '0')->count();
-        $counts['lostBooks'] = Item::where('type', 'book')->where('disabled', '0')->sum('qty_lost');
-        $counts['members'] = User::whereNotIn('role_id', [1, 2])->where('disabled', '0')->count();
-        $counts['roles'] = Role::count();
-        $counts['borrowed'] = IssueItem::where('status', 'BORROW')->count();
-        $counts['returned'] = IssueItem::where('status', 'RETURN')->count();
-        $counts['lost'] = IssueItem::where('status', 'LOST')->count();
-        $counts['categories'] = Category::count();
-        $counts['authors'] = Author::count();
-        $counts['publishers'] = Publisher::count();
-        $counts['racks'] = Rack::count();
-
-        $issues = IssueItem::whereDate('updated_at', today()->toDateString())->get();
-
-        return view('admin.dashboard', compact('counts', 'issues'));
+    public function dashboard()
+    {
+        return view('admin.dashboard');
     }
 
-    public function profile() {
+    public function profile()
+    {
         $user = User::findOrFail(auth()->user()->id);
 
         return view('admin.profile', compact('user'));
     }
 
-    public function updateProfile() {
+    public function updateProfile()
+    {
         $user = User::findOrFail(auth()->user()->id);
 
         request()->validate([
@@ -79,8 +74,8 @@ class AdminController extends Controller
         $user->address = strip_tags(request()->post('address'));
         $user->dob = request()->post('dob');
 
-        if(request()->hasFile('profile_url')) {
-            if($user->profile_url <> 'default.png' || $user->profile_url <> 'admin.jpg') {
+        if (request()->hasFile('profile_url')) {
+            if ($user->profile_url <> 'default.png' || $user->profile_url <> 'admin.jpg') {
                 $fileName = public_path() . '/img/users/' . $user->profile_url;
                 File::delete($fileName);
             }
@@ -99,38 +94,5 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->route('admin.dashboard');
-    }
-
-    public function changePassword() {
-        $user = User::findOrFail(auth()->user()->id);
-
-        return view('admin.changePassword', compact('user'));
-    }
-
-    public function updatePassword() {
-        $user = User::findOrFail(auth()->user()->id);
-
-        request()->validate([
-            'current_password' => 'required|string',
-            'password' => "required|string|confirmed",
-        ], $this->customMessages);
-
-        if(Hash::check(request()->post('current_password'), $user->password)) {
-            $user->password = bcrypt(request()->post('password'));
-            $user->password_changed_at = now();
-            $user->save();
-
-            return redirect()->route('admin.dashboard');
-        } else {
-            return redirect()->back()->withErrors(['current_password' => 'Your entered password is wrong, try again!']);
-        }
-    }
-
-    public function feedback() {
-        if(request()->ajax()) {
-            return datatables()->of(DB::table('feedbacks')->get())->addIndexColumn()->make(true);
-        }
-
-        return view('admin.feedback');
     }
 }
